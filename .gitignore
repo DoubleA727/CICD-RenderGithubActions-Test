@@ -1,0 +1,14 @@
+node_modules
+# Keep environment variables out of version control
+.env*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+config/service-account-key.json
+
+# Playwright
+/playwright/.auth/
+pw-output/
+test-results/
+playwright-report/

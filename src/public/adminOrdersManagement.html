@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SP Merch – Admin Orders Management</title>
+
+  <!-- Bootstrap & CSS -->
+  <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/css/cca.css" />
+
+  <!-- Admin Guard -->
+  <script src="./assets/js/adminGuard.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+
+  <!-- Shared -->
+  <script src="./assets/js/navbar.js" defer></script>
+  <script src="./assets/js/userNavbarToggle.js" defer></script>
+  <script src="./assets/js/footer.js" defer></script>
+
+  <!-- Admin Orders -->
+  <script src="./assets/js/adminOrders.js" defer></script>
+</head>
+
+<body class="bg-light">
+<div class="container-fluid mt-4">
+  <div class="row g-3">
+
+    <!-- SIDEBAR -->
+    <aside class="col-lg-2 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Admin Menu</h5>
+          <nav class="nav flex-column gap-1">
+            <a class="nav-link" href="admin.html">Merch Management</a>
+            <a class="nav-link" href="adminCCA.html">CCA Management</a>
+            <a class="nav-link" href="promoEmailer.html">Promotional Email</a>
+            <a class="nav-link" href="adminUsersManagement.html">Users Management</a>
+            <a class="nav-link active" href="adminOrdersManagement.html">Orders Management</a>
+            <a id="adminChatLink" class="nav-link" href="#">Admin Chat</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="col-lg-10">
+
+      <!-- HEADER -->
+      <div class="card shadow-sm mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+
+            <div>
+              <h3 class="mb-1">Orders Management</h3>
+              <small class="text-muted">
+                View orders, filter by date/status, sort totals, and export CSV
+              </small>
+            </div>
+
+            <div class="d-flex gap-2 flex-wrap">
+              <button id="exportCsvBtn" class="btn btn-outline-success">Export CSV</button>
+              <button id="refreshBtn" class="btn btn-outline-primary">Refresh</button>
+            </div>
+
+          </div>
+
+          <hr class="my-3" />
+
+          <!-- FILTERS ROW -->
+          <div class="row g-2 align-items-end">
+
+            <div class="col-md-3">
+              <label class="form-label">From</label>
+              <input id="dateFrom" type="date" class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">To</label>
+              <input id="dateTo" type="date" class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Status</label>
+              <select id="statusFilter" class="form-select">
+                <option value="">All</option>
+                <option value="PENDING">PENDING</option>
+                <option value="PAID">PAID</option>
+                <option value="PROCESSING">PROCESSING</option>
+                <option value="SHIPPED">SHIPPED</option>
+                <option value="DELIVERED">DELIVERED</option>
+                <option value="CANCELLED">CANCELLED</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label">Sort</label>
+              <select id="sortBy" class="form-select">
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="highestTotal">Highest total paid</option>
+                <option value="lowestTotal">Lowest total paid</option>
+              </select>
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+              <button id="applyFiltersBtn" class="btn btn-primary">Apply</button>
+              <button id="clearFiltersBtn" class="btn btn-outline-secondary">Clear</button>
+              <div class="ms-auto text-muted small align-self-center" id="ordersMeta"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div id="alertContainer" class="mb-3"></div>
+
+      <!-- TABLE -->
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-3">
+            Orders
+            <small class="text-muted" id="ordersCount"></small>
+          </h5>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle" id="ordersTable">
+              <thead class="table-light">
+                <tr>
+                  <th>Order ID</th>
+                  <th>User</th>
+                  <th>Status</th>
+                  <th>Items</th>
+                  <th class="text-end">Subtotal</th>
+                  <th class="text-end">Shipping</th>
+                  <th class="text-end">Total</th>
+                  <th>Created</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ORDER DETAILS MODAL -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div id="orderDetailsHeader" class="mb-3"></div>
+
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Item</th>
+                <th class="text-end">Price</th>
+                <th class="text-end">Qty</th>
+                <th class="text-end">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="orderItemsTbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

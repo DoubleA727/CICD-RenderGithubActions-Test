@@ -1,0 +1,61 @@
+/* Glass card */
+.thank-card {
+    backdrop-filter: blur(18px);
+    border-radius: 18px;
+    padding: 50px 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* Animated checkmark */
+.checkmark {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    animation: pop 0.6s ease-out;
+}
+
+.checkmark i {
+    font-size: 48px;
+    color: white;
+}
+
+@keyframes pop {
+    0% {
+        transform: scale(0);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Button styling */
+.btn-modern {
+    background-color: #f04545;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 30px;
+    padding: 12px;
+    transition: 0.25s;
+}
+
+.btn-modern:hover {
+    background-color: #da3f3f;
+    transform: translateY(-2px);
+}
+
+.confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+}

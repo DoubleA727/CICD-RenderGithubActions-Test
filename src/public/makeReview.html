@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Review</title>
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/reviews.css">
+    <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+</head>
+<body>
+    <script src="/assets/js/navbar.js"></script>
+
+    <div class="mainBg mx-5 rounded py-2 px-3 text-light">
+        <h1 class="text-center mb-3"><strong>Make a Review</strong></h1>
+
+        <div class="fs-2 d-flex align-items-center gap-2">
+            <strong>Currently reviewing:</strong>
+            <p id="currentlyReviewing" class="mt-4 fs-4"></p>
+        </div>
+
+        <select class="form-select flex-grow-1 me-3 selectpicker mb-3 fs-5" id="merchDropdown" name="merch" data-live-search="true" data-size="8" title="Choose bought merchandise...">
+            <!-- filled ltr -->
+        </select>
+
+        <div class="row p-3 bg-light rounded mx-auto text-dark mb-3">
+            <div id="currentMerch"></div>
+            <div id="boughtOn"></div>
+        </div>
+
+        <h3><strong>Rating</strong></h3>
+        <hr class="opaque">
+
+        <form id="reviewForm">
+            <div class="mb-2">
+                <label class="radio-inline fs-3 me-3">
+                    <input type="radio" name="optradio" class="bigRadio" value="1"> ⭐ 1
+                </label>
+                <label class="radio-inline fs-3 me-3">
+                    <input type="radio" name="optradio" class="bigRadio" value="2"> ⭐⭐ 2
+                </label>
+                <label class="radio-inline fs-3 me-3">
+                    <input type="radio" name="optradio" class="bigRadio" value="3"> ⭐⭐⭐ 3
+                </label>
+                <label class="radio-inline fs-3 me-3">
+                    <input type="radio" name="optradio" class="bigRadio" value="4"> ⭐⭐⭐⭐ 4
+                </label>
+                <label class="radio-inline fs-3">
+                    <input type="radio" name="optradio" class="bigRadio" value="5"> ⭐⭐⭐⭐⭐ 5
+                </label>
+            </div>
+
+            <div class="my-2">
+                <label for="comments">Your Comments:</label><br>
+                <textarea id="comments" name="comments" rows="6" cols="100"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='review.html'">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js" defer></script>
+    <script src="./assets/js/makeReview.js"></script>
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+</body>
+</html>

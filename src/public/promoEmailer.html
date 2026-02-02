@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>SP Merch – Promotional Email</title>
+
+    <!-- Bootstrap & custom CSS -->
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/cca.css" />
+
+    <!-- Admin Guard (BLOCK non-admins) -->
+    <script src="./assets/js/adminGuard.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+
+    <!-- Shared scripts -->
+    <script src="./assets/js/navbar.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="./assets/js/footer.js" defer></script>
+
+    <!-- Promo email logic -->
+    <script src="./assets/js/promoEmailer.js" defer></script>
+  </head>
+
+  <body class="bg-light">
+    <div class="container-fluid mt-4">
+      <div class="row g-3">
+        <!-- SIDEBAR -->
+        <aside class="col-lg-2 mb-3">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Admin Menu</h5>
+              <nav class="nav flex-column gap-1">
+                <a class="nav-link" href="admin.html">Merch Management</a>
+                <a class="nav-link" href="adminCCA.html">CCA Management</a>
+                <a class="nav-link" href="promoEmailer.html">Promotional Email</a>
+                <a class="nav-link" href="adminUsersManagement.html">Users Management</a>
+                <a class="nav-link" href="adminOrdersManagement.html">Orders Management</a>
+                <a id="adminChatLink" class="nav-link" href="#">Admin Chat</a>
+              </nav>
+            </div>
+          </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="col-lg-10">
+          <div class="card shadow-sm mb-3">
+            <div class="card-body">
+              <h3 class="mb-1">Promotional Email Sender</h3>
+              <small class="text-muted">Send announcements to all users.</small>
+            </div>
+          </div>
+
+          <!-- Alerts -->
+          <div id="alertContainer"></div>
+
+          <!-- Email Form -->
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <form id="promoEmailForm">
+                <!-- Subject -->
+                <div class="mb-3">
+                  <label for="promoSubject" class="form-label"
+                    >Email Subject</label
+                  >
+                  <input
+                    type="text"
+                    id="promoSubject"
+                    class="form-control"
+                    placeholder="Example: New Merch Drop!"
+                    required
+                  />
+                </div>
+
+                <!-- HTML Content -->
+                <div class="mb-3">
+                  <label for="promoContent" class="form-label"
+                    >Email Content (HTML)</label
+                  >
+                  <textarea
+                    id="promoContent"
+                    class="form-control"
+                    rows="10"
+                    placeholder="<h1>Hello!</h1><p>Our new merch is here!</p>"
+                    required
+                  ></textarea>
+                </div>
+
+                <!-- Submit -->
+                <button class="btn btn-danger" type="submit">Send Email</button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="promoSuccessModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-success">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">Email Sent Successfully</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Promotional email has been sent to all users.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success"
+              data-bs-dismiss="modal"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="promoErrorModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-danger">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title">Failed to Send Email</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="promoErrorText">
+            Something went wrong.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SP Merch - CCA</title>
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/cca.css" />
+    <!-- <script src="./assets/bootstrap/bootstrap.min.js"></script> -->
+  </head>
+
+  <body>
+    <!-- Quick View Modal -->
+    <div class="modal fade" id="quickViewModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content modal-custom">
+          <button
+            type="button"
+            class="modal-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            &times;
+          </button>
+
+        <div class="modal-body">
+
+  <!-- 1️⃣ First Row: Image + Info -->
+  <div class="d-flex flex-md-row flex-column gap-4 align-items-start w-100">
+    
+    <img id="modalImage" src="" class="modal-img rounded" />
+
+    <div class="modal-info flex-grow-1">
+      <h3 id="modalTitle" class="modal-title-custom"></h3>
+
+      <p class="modal-category">
+        <strong>Category:</strong>
+        <span id="modalCategory"></span>
+      </p>
+
+      <p id="modalDesc" class="modal-desc"></p>
+
+      <a id="modalLink" href="#" class="btn modal-btn mt-3">
+        View Merch
+      </a>
+    </div>
+  </div>
+
+  <!-- 2️⃣ Second Row: Full width recommendations -->
+  <h5 class="mt-4 text-center">You may also like:</h5>
+
+  <div id="recommendContainer" class="recommend-section full-recommend"></div>
+
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/navbar.js"></script>
+    <hr>
+    <div class="container my-4">
+      <input
+        id="searchInput"
+        type="text"
+        class="form-control"
+        placeholder="Search for a CCA..."
+      />
+    </div>
+ <div class="container my-3">
+  <div class="row g-3">
+    <div class="col-md-3 col-12">
+      <select id="categoryFilter" class="form-select">
+        <option value="all">All Categories</option>
+        <option value="Sports">Sports</option>
+        <option value="Performing Arts">Performing Arts</option>
+        <option value="Clubs">Clubs & Interest Groups</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 col-12">
+      <select id="sortSelect" class="form-select">
+        <option value="none">Sort By</option>
+        <option value="az">Name A → Z</option>
+        <option value="za">Name Z → A</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+    <div class="cca-section" id="sports">
+      <h2 class="cca-title">Sports</h2>
+      <div class="card-container"></div>
+    </div>
+
+    <div class="cca-section" id="arts">
+      <h2 class="cca-title">Performing Arts</h2>
+      <div class="card-container"></div>
+    </div>
+
+    <div class="cca-section" id="clubs">
+      <h2 class="cca-title">Clubs & Interest Groups</h2>
+      <div class="card-container"></div>
+    </div>
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/cca.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

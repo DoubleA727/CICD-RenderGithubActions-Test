@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SP MERCH – Secure Payment</title>
+
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/payment.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <script src="/assets/js/navbar.js"></script>
+    <!-- Main Payment Section -->
+    <div class="container d-flex justify-content-center position-relative" style="z-index:20;">
+        <div class="payment-wrapper col-12">
+
+            <h2 class="text-center fw-bold mb-4">Secure Payment</h2>
+
+            <div class="row mt-4">
+
+                <!-- Payment Form -->
+                <div class="col-md-7">
+                    <h5 class="section-title mb-3">Billing Information</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" placeholder="John Tan">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="john@example.com">
+                    </div>
+
+                    <h5 class="section-title mt-4 mb-3">Card Details</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Card Number</label>
+                        <input type="Number" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" id="expiry" class="form-control" placeholder="MM/YY">
+                        </div>
+                        <div class="col-6 mb-3">
+                            <label class="form-label">CVV</label>
+                            <input type="password" id="cvv" class="form-control" placeholder="123">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-pay w-100 mt-3" onclick="completePayment()">
+                        Pay Now
+                    </button>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="col-md-5 mt-4 mt-md-0">
+                    <div class="summary-card">
+                        <h5 class="section-title mb-3">Order Summary</h5>
+
+                        <div id="summaryItems"></div>
+
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">Total</span>
+                            <span id="summaryTotal" class="fw-bold">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- Footer -->
+    <script src="/assets/js/footer.js"></script>
+    <script src="/assets/js/userNavbarToggle.js" defer></script>
+
+    <script>
+        // Load order summary from localStorage (you can replace with API)
+        document.addEventListener("DOMContentLoaded", () => {
+            const orderData = JSON.parse(localStorage.getItem("checkoutSummary"));
+            const summary = document.getElementById("summaryItems");
+            const total = document.getElementById("summaryTotal");
+
+            if (!orderData) {
+                summary.innerHTML = "<p>No items found.</p>";
+                return;
+            }
+
+            let html = "";
+            orderData.items.forEach(item => {
+                html += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${item.name} × ${item.qty}</span>
+                    <span>$${item.subtotal.toFixed(2)}</span>
+                </div>
+                `;
+            });
+
+            summary.innerHTML = html;
+            total.innerText = "$" + orderData.total.toFixed(2);
+        });
+
+        // Redirect to Thank You page
+        function completePayment() {
+            window.location.href = "thankyou.html";
+        }
+    </script>
+
+</body>
+
+</html>

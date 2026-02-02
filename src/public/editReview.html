@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Review</title>
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/reviews.css">
+    <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+</head>
+<body>
+    <script src="/assets/js/navbar.js"></script>
+
+    <div class="d-flex justify-content-center mt-5">
+        <div class="mainBg p-4 d-flex" style="max-width: 900px; width: 100%; border-radius: 20px; gap: 20px;">
+            <!-- Current Review Preview -->
+            <div class="card mb-2 pt-2 px-4" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                
+                <img id="previewImage" src="" alt="Merch Image" 
+                    style="height:200px; width:auto; object-fit:cover; border-radius:6px;" class="mb-3">
+                
+                <h3 id="previewMerchName"></h3>
+                
+                <p class="fs-4">Rating: <span id="previewRating"></span></p>
+                
+                <p id="previewComments" class="fs-4">Comments:</p>
+                
+                <p class="fs-5"><small id="previewPostedDate">Posted On:</small></p>
+                
+                <p class="fs-5"><small id="previewUpdatedDate">Last Updated:</small></p>
+            </div>
+
+            <!-- Edit Form -->
+            <div style="flex: 1;">
+                <h1 class="text-light text-center mb-3">Edit Your Review</h1>
+
+                <!-- Dropdown for selecting which review to edit -->
+                <div class="mb-4">
+                    <label for="merchDropdown" class="form-label text-light">Select Review</label>
+                    <select class="form-select" id="merchDropdown">
+                        <option value="" selected disabled>Choose a merchandise...</option>
+                    </select>
+                </div>
+
+                <form id="editReviewForm" class="text-light">
+                    <div class="mb-3">
+                        <label for="merchName" class="form-label">Merchandise</label>
+                        <input type="text" class="form-control" id="merchName" readonly>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating</label>
+                        <select class="form-select" id="rating" required>
+                            <option value="">Select rating</option>
+                            <option value="1">1 ★</option>
+                            <option value="2">2 ★★</option>
+                            <option value="3">3 ★★★</option>
+                            <option value="4">4 ★★★★</option>
+                            <option value="5">5 ★★★★★</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <textarea class="form-control" id="comments" rows="5" placeholder="Write your review here..."></textarea>
+                    </div>
+
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='userReviews.html'">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="./assets/js/editReview.js"></script>
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js" defer></script>
+</body>
+</html>

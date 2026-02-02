@@ -1,0 +1,233 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userId         Int               @id @default(autoincrement())
+  username       String
+  firstName      String
+  lastName       String
+  email          String            @unique
+  password       String
+  createdAt      DateTime          @default(now())
+  imageUrl       String            @default("./assets/images/profile-pic.png")
+  role           String            @default("member")
+  messages       Message[]         @relation("UserMessages")
+  orders         Order[]           @relation("UserOrders")
+  Order          Order[]
+  reviewComments ReviewComment[]
+  reviews        Review[]
+  achievements   UserAchievement[]
+  userMerch      UserMerch[]
+  userTiers      UserTier[]
+  oauthAccounts  OauthAccount[]
+
+  @@map("Users")
+}
+
+model UserMerch {
+  userMerchId Int      @id @default(autoincrement())
+  merchId     Int
+  userId      Int
+  collectedAt DateTime @default(now())
+  merch       Merch    @relation(fields: [merchId], references: [merchId])
+  user        Users    @relation(fields: [userId], references: [userId])
+}
+
+model Merch {
+  merchId     Int         @id @default(autoincrement())
+  tierId      Int
+  storyId     Int         @unique
+  ccaId       Int
+  name        String
+  description String?
+  price       Float
+  imageUrl    String
+  isActive    Boolean     @default(true)
+  cca         CCA         @relation(fields: [ccaId], references: [ccaId])
+  story       Story       @relation(fields: [storyId], references: [storyId])
+  tier        Tier        @relation(fields: [tierId], references: [tierId])
+  orderItems  OrderItem[]
+  reviews     Review[]
+  stocks      Stock[]
+  userMerch   UserMerch[]
+}
+
+model Story {
+  storyId   Int    @id @default(autoincrement())
+  merchId   Int
+  storyText String
+  tierId    Int
+  merch     Merch?
+  tier      Tier   @relation(fields: [tierId], references: [tierId])
+}
+
+model Tier {
+  tierId      Int        @id @default(autoincrement())
+  tierLevel   Int
+  name        String
+  description String?
+  merch       Merch[]
+  stories     Story[]
+  userTiers   UserTier[]
+}
+
+model CCA {
+  ccaId       Int     @id @default(autoincrement())
+  name        String
+  description String?
+  category    String
+  imageUrl    String
+  clicks      Int
+  isActive    Boolean @default(true)
+  merch       Merch[]
+}
+
+model Achievement {
+  achievementId    Int               @id @default(autoincrement())
+  name             String
+  description      String?
+  unlockCondition  String
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  userAchievementId Int         @id @default(autoincrement())
+  userId            Int
+  achievementId     Int
+  unlockedAt        DateTime    @default(now())
+  achievement       Achievement @relation(fields: [achievementId], references: [achievementId])
+  user              Users       @relation(fields: [userId], references: [userId])
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  shippingPrice Float
+  totalPrice    Float
+  status        String
+  createdAt     DateTime    @default(now())
+  usersUserId   Int?
+  user          Users       @relation("UserOrders", fields: [userId], references: [userId])
+  users         Users?      @relation(fields: [usersUserId], references: [userId])
+  orderItems    OrderItem[]
+}
+
+model OrderItem {
+  id       Int   @id @default(autoincrement())
+  orderId  Int
+  merchId  Int
+  quantity Int
+  subtotal Float
+  
+  merch    Merch @relation(fields: [merchId], references: [merchId])
+  order    Order @relation(fields: [orderId], references: [id])
+
+  customization OrderItemCustomization?
+}
+
+model Review {
+  reviewId       Int             @id @default(autoincrement())
+  userId         Int
+  merchId        Int
+  rating         Int
+  comments       String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now()) @updatedAt
+  reviewComments ReviewComment[]
+  merch          Merch           @relation(fields: [merchId], references: [merchId], onDelete: Cascade)
+  user           Users           @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@map("Reviews")
+}
+
+model ReviewComment {
+  commentId Int      @id @default(autoincrement())
+  reviewId  Int
+  userId    Int
+  comment   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  review    Review   @relation(fields: [reviewId], references: [reviewId], onDelete: Cascade)
+  user      Users    @relation(fields: [userId], references: [userId])
+
+  @@map("ReviewComments")
+}
+
+model Stock {
+  id       Int   @id @default(autoincrement())
+  merchId  Int
+  quantity Int
+  merch    Merch @relation(fields: [merchId], references: [merchId])
+}
+
+model UserTier {
+  id     Int   @id @default(autoincrement())
+  userId Int
+  tierId Int
+  tier   Tier  @relation(fields: [tierId], references: [tierId])
+  user   Users @relation(fields: [userId], references: [userId])
+}
+
+model OauthAccount {
+  id             Int      @id @default(autoincrement())
+  provider       String
+  providerUserId String
+  email          String?
+  createdAt      DateTime @default(now())
+  userId         Int
+  user           Users    @relation(fields: [userId], references: [userId], onDelete: Cascade)
+
+  @@unique([provider, providerUserId], name: "provider_providerUserId")
+  @@index([userId])
+  @@map("oauth_accounts")
+}
+
+model Conversation {
+  conversationId String    @id
+  createdAt      DateTime  @default(now())
+  messages       Message[]
+
+  @@map("Conversations")
+}
+
+model Message {
+  messageId      String       @id
+  conversationId String
+  senderId       Int
+  text           String
+  status         String       @default("sent")
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [conversationId], onDelete: Cascade)
+  sender         Users        @relation("UserMessages", fields: [senderId], references: [userId], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@map("Messages")
+}
+
+
+model OrderItemCustomization {
+  id          Int      @id @default(autoincrement())
+  orderItemId Int      @unique
+
+  color       String
+  customText  String?
+  badgeKey    String?
+
+  previewUrl  String?
+  previewData String?
+
+  createdAt   DateTime @default(now())
+
+  // FK → OrderItem(id) with ON DELETE CASCADE
+  orderItem   OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+  @@map("OrderItemCustomizations")
+  @@index([orderItemId], map: "idx_OrderItemCustomizations_orderItemId")
+}

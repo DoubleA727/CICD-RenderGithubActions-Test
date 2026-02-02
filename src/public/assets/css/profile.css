@@ -1,0 +1,106 @@
+.roundedBg {
+    background-color: rgba(243, 62, 62, 0.658);
+    border-radius: 20px;
+}
+
+.roundedBg2 {
+    background-color: rgba(243, 62, 62, 0.658);
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.seperation {
+    border: 0;
+    height: 2px;
+    background-color: black;
+    opacity: 0.67;
+}
+
+/* For reward spinner */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+}
+
+.wheel-container {
+    position: relative;
+    margin: 20px auto;
+    width: 250px;
+    height: 250px;
+}
+
+#wheel {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 6px solid #333;
+    position: relative;
+    /* important for absolute positioning of segments */
+    overflow: hidden;
+    transform: rotate(0deg);
+    transition: transform 4s ease-out;
+}
+
+.segment {
+    position: absolute;
+    /* position relative to wheel */
+    width: 50%;
+    /* radius */
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 0%;
+    /* pivot at center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    z-index: 10;
+    /* so it sits above the wheel */
+}
+
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+}
+
+.close-btn:hover {
+    color: #000;
+    transform: scale(1.1);
+}

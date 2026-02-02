@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <script src="/assets/bootstrap/bootstrap.min.js" defer></script>
+    <title>SP MERCH – Order</title>
+
+    <style>
+        .order-card-container {
+            min-height: 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="/assets/js/navbar.js"></script>
+
+    <!-- Add merch to order + current order listing -->
+    <main class="py-4">
+        <!-- View Cart Section -->
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+
+                    <!-- Page Title -->
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Your Cart</h2>
+                        <p class="text-muted">Review your items before checking out</p>
+                    </div>
+
+                    <!-- Card: Current Order Items -->
+                    <div class="card shadow-sm p-4 border-0">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Your Current Order</h4>
+                            <small class="text-muted" id="orderStatusText">Loading…</small>
+                        </div>
+
+                        <hr>
+
+                        <!-- CART ITEMS -->
+                        <div class="row g-4 mb-4 order-card-container" id="orderCardsContainer">
+                            <!-- Order item cards will be injected by JavaScript -->
+                        </div>
+
+                        <hr>
+
+                        <!-- Order Summary -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0">Total</h5>
+                            <h4 class="fw-bold text-primary" id="orderTotal">$0.00</h4>
+                        </div>
+
+                        <button id="checkoutBtn" class="btn btn-primary btn-lg w-100"
+                            onclick="window.location.href='checkout.html'">
+                            Proceed to Checkout
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+
+                    <!-- Continue Shopping -->
+                    <div class="text-center mt-4">
+                        <a href="merch.html" class="text-decoration-none">
+                            <i class="bi bi-chevron-left"></i> Continue Shopping
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/assets/js/footer.js"></script>
+
+    <script src="/assets/js/getCurrentURL.js" defer></script>
+    <script src="/assets/js/queryCmds.js" defer></script>
+    <script src="/assets/js/userNavbarToggle.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js" defer></script>
+
+    <!-- Order API helpers -->
+    <script src="/assets/js/orders/getOrder.js" defer></script>
+    <script src="/assets/js/orders/updateOrder.js" defer></script>
+
+    <!-- Page-specific script: render orders, wire buttons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderCardsContainer = document.getElementById('orderCardsContainer');
+            const statusText = document.getElementById('orderStatusText');
+
+            function renderOrders(orders) {
+                orderCardsContainer.innerHTML = '';
+
+                if (!orders || orders.length === 0) {
+                    statusText.textContent = 'No items in your order yet.';
+                    orderCardsContainer.innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-info mb-0">
+                            You don’t have any items in your order. Use the form above to add some merch!
+                        </div>
+                    </div>`;
+                    checkoutBtn.style.display = 'none';
+
+                    // Reset total if empty
+                    document.getElementById("orderTotal").textContent = "$0.00";
+                    return;
+                }
+
+                checkoutBtn.style.display = 'block';
+                statusText.textContent = `${orders.length} item(s) in your order`;
+
+                // Calculate total price dynamically
+                let total = 0;
+
+                orders.forEach(order => {
+                    console.log(order)
+                    total += Number(order.subtotal ?? 0);
+
+                    const merchName = order.name || `Merch #${order.merchId}`;
+
+                    const col = document.createElement('div');
+                    col.className = 'col-12 col-md-6 col-lg-4';
+
+                    col.innerHTML = `
+                        <div class="card h-100 shadow-sm">
+                            <div class="card-body d-flex flex-column">
+                                <div class="mb-2">
+                                    <h5 class="card-title mb-1">${merchName}</h5>
+                                    <p class="card-text mb-0"><strong>Merch ID:</strong> ${order.merchid}</p>
+                                    <p class="card-text mb-0"><strong>Quantity:</strong> ${order.quantity}</p>
+                                    <p class="card-text mb-1"><strong>Price:</strong> $${order.subtotal}</p>
+                                </div>
+
+                                <div class="mt-auto d-flex justify-content-between">
+                                    <button class="btn btn-sm btn-outline-primary btn-edit-order">Edit</button>
+                                    <button class="btn btn-sm btn-outline-danger btn-delete-order">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // attach listeners after inject
+                    const editBtn = col.querySelector('.btn-edit-order');
+                    const deleteBtn = col.querySelector('.btn-delete-order');
+
+                    editBtn.addEventListener('click', async () => {
+                        const currentQty = order.quantity;
+                        const newQtyStr = prompt('Enter new quantity:', currentQty);
+                        if (newQtyStr === null) return;
+
+                        const newQty = parseInt(newQtyStr);
+                        if (Number.isNaN(newQty) || newQty <= 0) {
+                            alert('Invalid quantity.');
+                            return;
+                        }
+
+                        const ok = await updateOrder(order.orderId, newQty);
+                        if (ok) refreshOrders();
+                    });
+
+                    deleteBtn.addEventListener('click', async () => {
+                        if (!confirm('Remove this item from your order?')) return;
+
+                        const ok = await deleteOrder(order.orderId);
+                        if (ok) refreshOrders();
+                    });
+
+                    orderCardsContainer.appendChild(col);
+                });
+
+                // Update total price on the page
+                document.getElementById("orderTotal").textContent = "S$" + total.toFixed(2);
+            }
+
+
+            async function refreshOrders() {
+                statusText.textContent = 'Loading…';
+                const orders = await getOrders();   // from getOrder.js
+                renderOrders(orders);
+            }
+
+            refreshOrders();
+        });
+    </script>
+</body>
+
+</html>

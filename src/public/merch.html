@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+    <title>SP MERCH</title>
+
+    <!-- Page-specific styles (move into styles.css if you prefer) -->
+    <style>
+      body {
+        background-color: #f5f6fa;
+      }
+
+      .merch-layout {
+        min-height: 70vh;
+      }
+
+      /* Sidebar */
+      .tier-sidebar {
+        background: #ffffff;
+        border-radius: 0.75rem;
+        box-shadow: 0 0.125rem 0.35rem rgba(0, 0, 0, 0.08);
+        padding: 1.25rem 1rem;
+      }
+
+      .tier-sidebar h5 {
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .tier-pill {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.7rem;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        font-size: 0.9rem;
+      }
+
+      .tier-pill:hover {
+        background: #f1f3f7;
+      }
+
+      .tier-pill input[type="radio"] {
+        accent-color: #dc3545;
+        /* Bootstrap danger red */
+      }
+
+      .tier-label {
+        font-weight: 500;
+      }
+
+      .tier-badge {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+      }
+
+      .tier-badge.bronze {
+        background: #f8e0c2;
+        color: #7a4a10;
+      }
+
+      .tier-badge.silver {
+        background: #e3e6eb;
+        color: #4b5563;
+      }
+
+      .tier-badge.gold {
+        background: #ffe9a6;
+        color: #7a5a00;
+      }
+
+      .tier-badge.platinum {
+        background: #dde9f5;
+        color: #1f3b57;
+      }
+
+      /* Merch cards */
+      .merch-card .card {
+        border: none;
+        border-radius: 0.85rem;
+        box-shadow: 0 0.15rem 0.45rem rgba(0, 0, 0, 0.06);
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+        height: 100%;
+      }
+
+      .merch-card .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0.35rem 0.8rem rgba(0, 0, 0, 0.09);
+      }
+
+      .merch-card img {
+        border-top-left-radius: 0.85rem;
+        border-top-right-radius: 0.85rem;
+        object-fit: cover;
+        height: 180px;
+      }
+
+      .merch-card .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .merch-tier-pill {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+      }
+
+      .price-text {
+        font-weight: 700;
+        color: #dc3545;
+      }
+
+      .points-text {
+        font-size: 0.8rem;
+        color: #6c757d;
+      }
+      
+      /* Floating AI Help Button & Chat Box */
+        #aiMerchHelpContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+        }
+
+        #aiMerchHelpBtn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        #aiMerchHelpBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #aiMerchChatBox {
+            display: none;
+            width: 300px;
+            height: 400px;
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #aiMerchChatHeader {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #aiMerchChatHeader button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        #aiMerchChatMessages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+
+        #aiMerchChatMessages .message {
+            margin-bottom: 10px;
+        }
+
+        #aiMerchChatMessages .userMessage {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        #aiMerchChatMessages .botMessage {
+            text-align: left;
+            font-style: italic;
+        }
+
+        #aiMerchChatInput {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        #aiMerchChatInput input {
+            flex: 1;
+            border: none;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        #aiMerchChatInput button {
+            border: none;
+            background-color: #dc3545;
+            color: white;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        #aiMerchChatHeader button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        #aiMerchChatHeader button:hover {
+            opacity: 0.8;
+        }
+    </style>
+  </head>
+
+  <body>
+    <script src="./assets/js/navbar.js"></script>
+
+    <!-- Merchandise Listing -->
+    <main class="py-4">
+      <div class="container-fluid merch-layout">
+        <div class="row g-4">
+          <!-- customise merch button -->
+          <aside class="col-12 col-md-3 col-lg-2">
+            <div class="d-grid mb-3">
+              <a href="./customizeMerch.html" class="btn btn-danger">
+                Customize your own merch
+              </a>
+            </div>
+            <!-- Sidebar: Tier Filter -->
+            <div class="tier-sidebar">
+              <h5>Filter by Tier</h5>
+              <div class="tier-pill">
+                <input
+                  type="radio"
+                  name="tierFilter"
+                  value="all"
+                  id="tierAll"
+                  checked
+                />
+                <label for="tierAll" class="tier-label mb-0">All Tiers</label>
+              </div>
+
+              <hr />
+
+              <div class="tier-pill">
+                <input
+                  type="radio"
+                  name="tierFilter"
+                  value="bronze"
+                  id="tierBronze"
+                />
+                <label for="tierBronze" class="tier-label mb-0">
+                  Bronze
+                  <span class="tier-badge bronze ms-1">Tier 1</span>
+                </label>
+              </div>
+
+              <div class="tier-pill hidden">
+                <input
+                  type="radio"
+                  name="tierFilter"
+                  value="silver"
+                  id="tierSilver"
+                />
+                <label for="tierSilver" class="tier-label mb-0">
+                  Silver
+                  <span class="tier-badge silver ms-1">Tier 2</span>
+                </label>
+              </div>
+
+              <div class="tier-pill hidden">
+                <input
+                  type="radio"
+                  name="tierFilter"
+                  value="gold"
+                  id="tierGold"
+                />
+                <label for="tierGold" class="tier-label mb-0">
+                  Gold
+                  <span class="tier-badge gold ms-1">Tier 3</span>
+                </label>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Merchandise Cards -->
+          <section class="col-12 col-md-9 col-lg-10">
+            <!-- Loader -->
+            <div
+              id="merchLoader"
+              class="justify-content-center align-items-center"
+              style="min-height: 300px"
+            >
+              <div class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+
+            <div class="row g-4" id="merchGrid" style="display: none">
+              <!-- Cards will be inserted here -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Merch Details Modal -->
+    <div
+      class="modal fade"
+      id="merchDetailsModal"
+      tabindex="-1"
+      aria-labelledby="merchModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="merchModalLabel">Merch Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3 align-items-start">
+              <div class="col-12 col-md-4 text-center">
+                <img
+                  id="merchModalImage"
+                  src=""
+                  alt="Merch image"
+                  class="img-fluid rounded"
+                />
+              </div>
+              <div class="col-12 col-md-8">
+                <h5 id="merchModalName" class="mb-2"></h5>
+                <p class="mb-1">
+                  <span id="merchModalTier" class="badge"></span>
+                </p>
+                <p
+                  class="fs-5 fw-bold text-danger mb-2"
+                  id="merchModalPrice"
+                ></p>
+                <p class="mb-2" id="merchModalDescription">
+                  No description available.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="./ArTryOn.html">
+              <button id="tryOnBtn" type="button" class="btn btn-danger">
+                Try On
+              </button>
+            </a>
+            <button id="merchModalBuyBtn" type="button" class="btn btn-danger">
+              Buy
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Merch Help Button & Chat Box -->
+    <div id="aiMerchHelpContainer">
+        <button id="aiMerchHelpBtn">💬</button>
+        <div id="aiMerchChatBox">
+            <div id="aiMerchChatHeader">
+                <span>Merch Assistant</span>
+                <div>
+                    <button id="aiMerchClearBtn" title="Clear Chat">🗑️</button>
+                    <button id="aiMerchCloseBtn">&times;</button>
+                </div>
+            </div>
+            <div id="aiMerchChatMessages"></div>
+            <div id="aiMerchChatInput">
+                <input type="text" id="aiMerchQuestion" placeholder="Ask about merch..." />
+                <button id="aiMerchSendBtn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="./assets/js/retrieveMerch.js" defer></script>
+    <script src="./assets/js/aiMerchChat.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"
+      defer
+    ></script>
+  </body>
+</html>

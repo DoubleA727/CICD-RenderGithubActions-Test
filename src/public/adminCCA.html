@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin CCA Dashboard</title>
+
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/adminCCA.css" />
+    <script src="./assets/js/adminGuard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <script src="./assets/js/navbar.js"></script>
+    <hr />
+
+    <div class="container-fluid mt-4">
+      <div class="row g-3">
+        <!-- SIDEBAR -->
+        <aside class="col-lg-2 mb-3">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Admin Menu</h5>
+              <nav class="nav flex-column gap-1">
+                <a class="nav-link" href="admin.html">Merch Management</a>
+                <a class="nav-link" href="adminCCA.html">CCA Management</a>
+                <a class="nav-link" href="promoEmailer.html">Promotional Email</a>
+                <a class="nav-link" href="adminUsersManagement.html">Users Management</a>
+                <a class="nav-link" href="adminOrdersManagement.html">Orders Management</a>
+                <a id="adminChatLink" class="nav-link" href="#">Admin Chat</a>
+              </nav>
+            </div>
+          </div>
+        </aside>
+
+        <!-- MAIN CONTENT (your existing CCA dashboard goes here) -->
+        <main class="col-lg-10">
+          <!-- Chart.js -->
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <div id="dashboard" class="container mt-5">
+            <div
+              class="analytics-header d-flex align-items-center justify-content-between"
+            >
+              <h3 class="title-purple analytics-title mb-0">
+                📊 Analytics Dashboard
+              </h3>
+
+              <div class="dropdown export-dropdown">
+                <button
+                  class="export-dropdown-btn"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  Export ▾
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end simple-export-menu">
+                  <li>
+                    <a class="dropdown-item" href="#" id="exportPDF"
+                      >📄 Export as PDF</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" id="exportExcel"
+                      >📊 Export Excel (.xlsx)</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" id="exportBar"
+                      >📊 Export Bar Chart (PNG)</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="#" id="exportPie"
+                      >🧁 Export Pie Chart (PNG)</a
+                    >
+                  </li>
+
+                  <li>
+                    <a class="dropdown-item" href="#" id="exportCSV"
+                      >📁 Export Table as CSV</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="analytics-filters">
+                <select id="categoryFilter" class="filter-select form-select">
+                  <option value="all">All Categories</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Performing Arts">Performing Arts</option>
+                  <option value="Clubs">Clubs & Interest Groups</option>
+                  <option value="disabled">Disabled CCAs</option>
+                </select>
+
+                <select id="sortFilter" class="filter-select form-select">
+                  <option value="default">Sort By</option>
+                  <option value="clicks_desc">Clicks: High → Low</option>
+                  <option value="clicks_asc">Clicks: Low → High</option>
+                  <option value="name_asc">Name: A → Z</option>
+                  <option value="name_desc">Name: Z → A</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="kpi-card">
+                <h4>Total CCAs</h4>
+                <p id="kpiTotalCCA">0</p>
+              </div>
+
+              <div class="kpi-card">
+                <h4>Total Clicks</h4>
+                <p id="kpiTotalClicks">0</p>
+              </div>
+
+              <div class="kpi-card">
+                <h4>Most Popular</h4>
+                <p id="kpiMostPopular">-</p>
+              </div>
+
+              <div class="kpi-card">
+                <h4>Least Popular</h4>
+                <p id="kpiLeastPopular">-</p>
+              </div>
+            </div>
+
+            <div class="analytics-grid-3">
+              <!-- BAR CHART -->
+              <div class="analytics-card">
+                <h5 class="chart-title">CCA Popularity (Clicks per CCA)</h5>
+                <canvas id="ccaBarChart"></canvas>
+              </div>
+
+              <!-- PIE CHART -->
+              <div class="analytics-card">
+                <h5 class="chart-title">Category Distribution</h5>
+                <canvas id="ccaPieChart"></canvas>
+              </div>
+
+              <!-- BREAKDOWN LEGEND -->
+              <div class="analytics-card breakdown-wrapper">
+                <h5 class="chart-title">Category Breakdown</h5>
+                <div id="breakdownList"></div>
+              </div>
+            </div>
+
+            <div class="container py-4">
+              <h1 class="text-center mb-4 title-purple">
+                CCA Popularity Dashboard
+              </h1>
+              <div class="d-flex justify-content-end mb-3">
+                <button class="btn sp-add-btn px-3" id="openAddCCAModal">
+                  Add
+                </button>
+              </div>
+              <div class="card p-4 shadow-sm">
+                <h3 class="mb-3">🏆 Popularity Leaderboard</h3>
+
+                <table class="table" id="ccaTable">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Rank</th>
+                      <th>CCA Name</th>
+                      <th>Category</th>
+                      <th>Clicks</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- JS will fill this -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- EDIT CCA MODAL -->
+            <div
+              class="modal fade"
+              id="editCCAModal"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div
+                  class="modal-content border-0 shadow-lg rounded-4"
+                  style="overflow: hidden"
+                >
+                  <!-- HEADER -->
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-semibold">Edit CCA Details</h5>
+                    <button
+                      type="button"
+                      class="btn-close btn-close-white"
+                      data-bs-dismiss="modal"
+                    ></button>
+                  </div>
+
+                  <!-- BODY -->
+                  <div class="modal-body px-4 py-4" style="background: #f8faff">
+                    <form id="editCCAForm" class="row g-4">
+                      <input type="hidden" id="editCCAId" />
+
+                      <!-- CCA Name -->
+                      <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary"
+                          >CCA Name</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control rounded-3 shadow-sm"
+                          id="editCCAName"
+                          placeholder="Enter CCA name"
+                        />
+                      </div>
+
+                      <!-- Category -->
+                      <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Category</label
+                        >
+                        <select
+                          class="form-select rounded-3 shadow-sm"
+                          id="editCCACategory"
+                        >
+                          <option value="Sports">Sports</option>
+                          <option value="Performing Arts">
+                            Performing Arts
+                          </option>
+                          <option value="Clubs">Clubs & Interest Groups</option>
+                        </select>
+                      </div>
+
+                      <!-- Description -->
+                      <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Description</label
+                        >
+                        <textarea
+                          class="form-control rounded-3 shadow-sm"
+                          id="editCCADescription"
+                          rows="3"
+                          placeholder="Write a short description"
+                        ></textarea>
+                      </div>
+
+                      <!-- Image URL -->
+                      <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Image URL</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control rounded-3 shadow-sm"
+                          id="editCCAImageUrl"
+                          placeholder="https://example.com/image.jpg"
+                        />
+                      </div>
+
+                      <!-- Image Preview -->
+                      <div
+                        class="col-12 mt-3 text-center"
+                        id="ccaImagePreviewContainer"
+                        style="display: none"
+                      >
+                        <img
+                          id="ccaImagePreview"
+                          class="rounded-3 shadow-sm"
+                          style="max-height: 180px; object-fit: cover"
+                        />
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- FOOTER -->
+                  <div
+                    class="modal-footer border-0 px-4 pb-4"
+                    style="background: #f8faff"
+                  >
+                    <button
+                      class="btn btn-light px-4 py-2 rounded-3 border"
+                      data-bs-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="btn px-4 py-2 text-white rounded-3 shadow confirm-btn"
+                      id="saveCCAChanges"
+                      style="
+                        background: linear-gradient(135deg, #4b7bff, #78a8ff);
+                      "
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ADD CCA MODAL -->
+            <div
+              class="modal fade"
+              id="addCCAModal"
+              tabindex="-1"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                  <!-- HEADER -->
+                  <div class="modal-header">
+                    <h5 class="modal-title fw-semibold">Add New CCA</h5>
+                    <button
+                      class="btn-close btn-close-white"
+                      data-bs-dismiss="modal"
+                    ></button>
+                  </div>
+
+                  <!-- BODY -->
+                  <div class="modal-body px-4 py-4" style="background: #f8faff">
+                    <form id="addCCAForm" class="row g-4">
+                      <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary"
+                          >CCA Name</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control rounded-3"
+                          id="newCCAName"
+                          placeholder="Enter CCA name"
+                        />
+                      </div>
+
+                      <div class="col-md-6">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Category</label
+                        >
+                        <select
+                          class="form-select rounded-3"
+                          id="newCCACategory"
+                        >
+                          <option value="Sports">Sports</option>
+                          <option value="Performing Arts">
+                            Performing Arts
+                          </option>
+                          <option value="Clubs">Clubs & Interest Groups</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Description</label
+                        >
+                        <textarea
+                          class="form-control rounded-3"
+                          id="newCCADescription"
+                          rows="3"
+                          placeholder="Short description"
+                        ></textarea>
+                      </div>
+
+                      <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary"
+                          >Image URL</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control rounded-3"
+                          id="newCCAImageUrl"
+                          placeholder="https://example.com/img.jpg"
+                        />
+                      </div>
+                    </form>
+                  </div>
+
+                  <!-- FOOTER -->
+                  <div
+                    class="modal-footer border-0 px-4 pb-4"
+                    style="background: #f8faff"
+                  >
+                    <button class="btn btn-light px-4" data-bs-dismiss="modal">
+                      Cancel
+                    </button>
+                    <button
+                      class="btn px-4 py-2 text-white rounded-3 shadow confirm-btn"
+                      id="saveNewCCA"
+                    >
+                      Add CCA
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="./assets/js/adminCCA.js"></script>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./assets/css/profile.css">
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <title>SP MERCH</title>
+</head>
+
+<body>
+  <script src="./assets/js/navbar.js"></script>
+
+  <!-- Successful Login User Dashboard -->
+  <h1 id="username" class="mt-2 mb-4 text-center"></h1>
+  <img id="profilePic" src="" alt="Profile Picture" height="200" width="200" class="mb-3 mx-auto d-block rounded">
+
+  <div class="d-flex justify-content-center mt-4 mb-3">
+    <div class="p-4 border rounded shadow-sm text-center bg-secondary-subtle"
+      style="width: 350px; background: #f8f9fa;">
+      <form id="uploadProfileForm" enctype="multipart/form-data">
+        <label class="form-label fw-semibold mb-2">Upload New Profile Picture</label>
+
+        <input type="file" id="profilePicInput" name="profilePic" accept="image/*" class="form-control mb-3">
+
+        <button type="submit" class="btn btn-primary w-100">
+          Upload
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- User Details -->
+  <div class="roundedBg py-3 px-4 mb-5 mx-5 text-light">
+    <h3>User Details</h3>
+    <hr class="seperation">
+    <div id="userDetails"></div>
+  </div>
+
+  <!-- Recently Viewed Merch section -->
+  <div class="mx-5 mb-5">
+    <h3 class="mb-3 text-center">Recently Viewed Merch</h3>
+
+    <!-- Empty-state message (hidden when there is data) -->
+    <div id="recentlyViewedEmpty" class="roundedBg2 text-center py-3">
+      You have no recently viewed merch currently.
+    </div>
+
+    <!-- Cards go here when there is data -->
+    <div class="row g-4 mt-3" id="recentlyViewedGrid"></div>
+  </div>
+
+  <!-- Collected Merch -->
+  <h3 class="mt-4 mb-5 text-center">Collected Merch</h3>
+  <div id="PurchaseHistory" class="mx-5 roundedBg2"></div>
+
+  <!-- Merch Details Modal (same as merch.html) -->
+  <div class="modal fade" id="merchDetailsModal" tabindex="-1" aria-labelledby="merchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="merchModalLabel">Merch Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 align-items-start">
+            <div class="col-12 col-md-4 text-center">
+              <img id="merchModalImage" src="" alt="Merch image" class="img-fluid rounded">
+            </div>
+            <div class="col-12 col-md-8">
+              <h5 id="merchModalName" class="mb-2"></h5>
+              <p class="mb-1"><span id="merchModalTier" class="badge"></span></p>
+              <p class="fs-5 fw-bold text-danger mb-2" id="merchModalPrice"></p>
+              <p class="mb-2" id="merchModalDescription">No description available.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="merchModalBuyBtn" type="button" class="btn btn-danger">Buy</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">🎉 Daily Login Reward</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="wheel-container">
+            <div id="wheel">
+              <div class="segment">30% Off</div>
+              <div class="segment">25% Off</div>
+              <div class="segment">20% Off</div>
+              <div class="segment">15% Off</div>
+              <div class="segment">10% Off</div>
+              <div class="segment">5% Off</div>
+            </div>
+            <div class="pointer">▲</div>
+          </div>
+
+          <button id="spinBtn" class="btn btn-primary mt-3">
+            SPIN
+          </button>
+        </div>
+        <div class="modal-footer">
+          <p id="resultText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- Edit User Details -->
+  <div class="roundedBg py-3 px-4 mb-5 mx-5 text-light">
+    <h3>Edit Profile</h3>
+    <hr class="seperation">
+
+    <div id="editWarningCard" class="card border-danger mt-3 mb-3 d-none">
+      <div class="card-body text-danger">
+        <p id="editWarningText" class="card-text mb-0"></p>
+      </div>
+    </div>
+
+    <form id="editProfileForm">
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-control" id="editUsername" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" id="editFirstName" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="editLastName" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" id="editEmail" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">New Password (optional)</label>
+        <input type="password" class="form-control" id="editPassword" placeholder="Leave blank to keep current password">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+
+  <script src="./assets/js/profileRecentlyViewed.js" defer></script>
+
+  <script src="./assets/js/footer.js"></script>
+  <script src="./assets/js/getCurrentURL.js" defer></script>
+  <script src="./assets/js/queryCmds.js" defer></script>
+  <script src="./assets/js/userNavbarToggle.js" defer></script>
+  <script src="./assets/js/profileMerchModal.js"></script>
+  <script src="./assets/js/profile.js"></script>
+  <script src="./assets/js/rewardSpinner/rewardSpinner.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js" defer></script>
+
+</body>
+
+</html>

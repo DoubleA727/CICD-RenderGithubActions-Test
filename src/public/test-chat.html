@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head><meta charset="utf-8" /><title>Socket Test</title></head>
+  <body>
+    <h3>Socket Test</h3>
+
+    <div>
+      Conversation ID:
+      <input id="cid" value="u001__u002" />
+      <button id="join">Join</button>
+    </div>
+
+    <div style="margin-top:10px;">
+      Message:
+      <input id="msg" />
+      <button id="send">Send</button>
+    </div>
+
+    <pre id="log" style="margin-top:15px;background:#111;color:#0f0;padding:10px;height:260px;overflow:auto;"></pre>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const logEl = document.getElementById("log");
+      const socket = io();
+
+      const log = (...a) => {
+        logEl.textContent += a.join(" ") + "\n";
+        logEl.scrollTop = logEl.scrollHeight;
+      };
+
+      socket.on("connect", () => log("CONNECTED:", socket.id));
+      socket.on("connect_error", (e) => log("CONNECT_ERROR:", e.message));
+
+      document.getElementById("join").onclick = () => {
+        const conversationId = document.getElementById("cid").value.trim();
+        socket.emit("joinConversation", { conversationId });
+        log("emit joinConversation", conversationId);
+      };
+
+      document.getElementById("send").onclick = () => {
+        const conversationId = document.getElementById("cid").value.trim();
+        const text = document.getElementById("msg").value.trim();
+        const message = { senderId:"u001", text, createdAt:new Date().toISOString(), status:"sent" };
+        socket.emit("sendMessage", { conversationId, message });
+        log("emit sendMessage", JSON.stringify(message));
+      };
+
+      socket.on("newMessage", (payload) => log("RECEIVED newMessage", JSON.stringify(payload)));
+      socket.on("typing", (payload) => log("RECEIVED typing", JSON.stringify(payload)));
+      socket.on("readReceipt", (payload) => log("RECEIVED readReceipt", JSON.stringify(payload)));
+    </script>
+  </body>
+</html>

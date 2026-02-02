@@ -1,0 +1,44 @@
+.mainBg{
+    background-color: rgb(267, 69, 69);
+}
+
+.opaque{
+    border: none;       
+    height: 1px;                 
+    background-color: white;
+    opacity: 1;
+}
+
+.bigRadio {
+    width: 20px;
+    height: 20px;
+}
+
+#aiSummaryBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 6px;
+}
+
+#aiSummaryBtn .tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    background: black;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    position: absolute;
+    top: -35px;
+    left: 0;
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 50;
+}
+
+#aiSummaryBtn:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

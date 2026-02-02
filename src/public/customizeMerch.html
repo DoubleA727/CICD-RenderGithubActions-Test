@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+  <title>Customize Your Merch</title>
+
+  <style>
+    .preview-card { border-radius: 0.85rem; box-shadow: 0 0.15rem 0.45rem rgba(0,0,0,0.08); }
+    canvas { width: 100%; height: auto; border-radius: 0.75rem; background: #fff; }
+    .badge-thumb { width: 56px; height: 56px; object-fit: contain; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px; cursor: pointer; }
+    .badge-thumb.active { outline: 3px solid #dc3545; }
+  </style>
+</head>
+
+<body>
+  <script src="./assets/js/navbar.js"></script>
+
+  <main class="py-4">
+    <div class="container">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h3 class="m-0">Customize your own merch</h3>
+        <a class="btn btn-outline-secondary" href="./merch.html">Back to Merch</a>
+      </div>
+
+      <div class="row g-4">
+        <!-- Preview -->
+        <div class="col-12 col-lg-7">
+          <div class="card preview-card p-3">
+            <canvas id="previewCanvas" width="900" height="900"></canvas>
+            <div class="text-muted small mt-2">
+              Live preview updates as you change options.
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="col-12 col-lg-5">
+          <div class="card preview-card p-3">
+            <h5 class="mb-3">Options</h5>
+
+            <div class="mb-3">
+              <label class="form-label">Base item</label>
+              <select class="form-select" id="baseSelect">
+                <option value="tshirt" selected>T-Shirt</option>
+                <option value="hoodie">Hoodie</option>
+                <option value="totebag">Tote Bag</option>
+              </select>
+              <div class="form-text">For now this just changes the base image.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Colour</label>
+              <select class="form-select" id="colorSelect">
+                <option value="black" selected>Black</option>
+                <option value="red">Red</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Custom text (max 16 chars)</label>
+              <input type="text" class="form-control" id="textInput" maxlength="16" placeholder="e.g. JONAH" />
+              <div class="d-flex justify-content-between mt-1">
+                <div class="small text-muted">Shown at the bottom of the design</div>
+                <div class="small text-muted" id="textCount">0/16</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Badge / Logo</label>
+              <div class="d-flex gap-2 flex-wrap" id="badgeList">
+                <!-- filled by JS -->
+              </div>
+              <div class="form-text">Click a badge to select it.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Quantity</label>
+              <input type="number" class="form-control" id="qtyInput" min="1" value="1" />
+            </div>
+
+            <hr />
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold">Estimated Price</div>
+                <div class="text-danger fs-5" id="priceText">$0.00</div>
+                <div class="small text-muted">Base + add-ons (text/badge)</div>
+              </div>
+
+              <button class="btn btn-danger" id="addToCartBtn">
+                Add to Cart
+              </button>
+            </div>
+
+            <div class="mt-3" id="statusMsg"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+    <script src="./assets/js/customizeMerch.js" defer></script>
+    <script src="./assets/js/customPostOrder.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SP Merch – Admin User Management</title>
+
+  <!-- Bootstrap & CSS -->
+  <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+  <link rel="stylesheet" href="./assets/css/cca.css" />
+
+  <!-- Admin Guard -->
+  <script src="./assets/js/adminGuard.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+
+  <!-- Shared -->
+  <script src="./assets/js/navbar.js" defer></script>
+  <script src="./assets/js/userNavbarToggle.js" defer></script>
+  <script src="./assets/js/footer.js" defer></script>
+
+  <!-- Admin Users -->
+  <script src="./assets/js/adminUsers.js" defer></script>
+</head>
+
+<body class="bg-light">
+<div class="container-fluid mt-4">
+  <div class="row g-3">
+
+    <!-- SIDEBAR -->
+    <aside class="col-lg-2 mb-3">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Admin Menu</h5>
+          <nav class="nav flex-column gap-1">
+            <a class="nav-link" href="admin.html">Merch Management</a>
+            <a class="nav-link" href="adminCCA.html">CCA Management</a>
+            <a class="nav-link" href="promoEmailer.html">Promotional Email</a>
+            <a class="nav-link" href="adminUsersManagement.html">Users Management</a>
+            <a class="nav-link" href="adminOrdersManagement.html">Orders Management</a>
+            <a id="adminChatLink" class="nav-link" href="#">Admin Chat</a>
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="col-lg-10">
+
+      <!-- HEADER -->
+      <div class="card shadow-sm mb-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mb-1">User Management</h3>
+                <small class="text-muted">
+                View, edit, and soft delete users
+                </small>
+            </div>
+
+            <div class="d-flex gap-2">
+                <input
+                    id="searchInput"
+                    type="text"
+                    class="form-control"
+                    style="max-width: 260px"
+                    placeholder="Search username/email/id..."
+                />
+                <button id="refreshBtn" class="btn btn-outline-primary">Refresh</button>
+            </div>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div id="alertContainer" class="mb-3"></div>
+
+      <!-- TABLE -->
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-3">
+            Users <small class="text-muted" id="usersMeta"></small>
+          </h5>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle" id="usersTable">
+              <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Username</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Created</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- EDIT USER MODAL -->
+<div class="modal fade" id="editUserModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form id="editUserForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="editUserId" />
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Username</label>
+              <input id="editUsername" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input id="editEmail" type="email" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">First Name</label>
+              <input id="editFirstName" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Last Name</label>
+              <input id="editLastName" class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Role</label>
+              <select id="editRole" class="form-select">
+                <option value="member">member</option>
+                <option value="admin">admin</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">
+                New Password <small class="text-muted">(optional)</small>
+              </label>
+              <input id="editPassword" type="password" class="form-control" />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+body {
+  background: linear-gradient(180deg, #faf7ff, #ffffff);
+  color: black;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* HERO */
+.hero-section {
+  background: transparent !important;
+  padding: 80px 60px;
+}
+
+.section-title {
+  color: #2d2056;
+    font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.about-text {
+  color: #2d2056;
+  max-width: 420px;
+}
+#heroCarousel {
+  max-width: 320px;   
+}
+
+.hero-carousel-img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;  
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* CAROUSEL DOTS */
+.custom-dots button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+.custom-dots .active {
+  background-color:black;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 40px 20px;
+    text-align: center;
+  }
+
+  .hero-carousel-img {
+  width: 100%;        /* responsive */
+  height: 300px;
+  max-width: 280px;   /* control size */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+}
+
+/* =========================================
+   PREMIUM LIMITED DEALS SECTION — SP MERCH
+========================================= */
+.limited-section {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 70px 20px;
+  text-align: center;
+  color: #2d2056;
+  margin-top: 50px;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+.limited-header {
+  margin-bottom: 40px;
+}
+
+.limited-title {
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.limited-subtitle {
+  font-size: 18px;
+  margin-top: 8px;
+  opacity: 0.85;
+}
+
+.limited-countdown {
+  margin-top: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2d2056;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* GRID OF CARDS */
+.limited-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* CARD STYLING */
+.limited-card {
+  background: white;
+  color: black;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.limited-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+}
+
+.limited-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.limited-card h3 {
+  margin-top: 15px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.limited-card p {
+  font-size: 14px;
+  color: #444;
+  margin-top: 5px;
+}
+
+.price-wrapper {
+  margin-top: 12px;
+}
+
+.price-wrapper .new-price {
+  font-size: 22px;
+  font-weight: 800;
+  color: #b40000;
+}
+
+.price-wrapper .old-price {
+  font-size: 15px;
+  text-decoration: line-through;
+  color: gray;
+  margin-left: 8px;
+}
+
+.limited-card button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #4e2a84, #7141e2);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  width: 100%;
+  transition: 0.25s ease;
+}
+
+.limited-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(113, 65, 226, 0.4);
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .limited-title {
+    font-size: 36px;
+  }
+
+  .limited-countdown {
+    font-size: 20px;
+    padding: 8px 18px;
+  }
+}
+
+/* Merch Models */
+.model-canvas {
+  width: 100%;
+  height: 400px;
+  background-color: #f0f0f0;
+  min-height: 400px;
+}
+
+
+/* Suggested Merch Section */
+.suggested-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background: #fff;
+}
+
+.suggested-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.suggested-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.suggested-badge {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f1f5ff;
+  color: #1f3b8b;
+  display: inline-block;
+}

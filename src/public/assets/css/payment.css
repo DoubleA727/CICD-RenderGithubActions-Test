@@ -1,0 +1,41 @@
+/* Payment container */
+.payment-wrapper {
+    max-width: 900px;
+    padding: 50px 40px;
+    margin-top: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 18px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 10px 45px rgba(0, 0, 0, 0.15);
+}
+
+/* Input styling */
+.form-control {
+    border-radius: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Button */
+.btn-pay {
+    background-color: #f04545;
+    border: none;
+    border-radius: 30px;
+    padding: 14px;
+    font-weight: 600;
+    color: white;
+    transition: 0.25s;
+}
+
+.btn-pay:hover {
+    background-color: #da3f3f;
+    transform: translateY(-2px);
+}
+
+/* Order Summary card */
+.summary-card {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    padding: 20px;
+}

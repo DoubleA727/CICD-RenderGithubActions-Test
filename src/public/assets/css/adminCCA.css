@@ -1,0 +1,489 @@
+/* =======================================
+   GENERAL STYLES
+======================================= */
+.title-purple {
+  color: #6b23c9;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.leaderboard-card {
+  border-radius: 15px;
+}
+
+#ccaTable tbody tr:hover {
+  background-color: #f3eaff;
+  transition: 0.2s ease;
+}
+
+.click-number {
+  font-weight: 700;
+  color: #8f44fd;
+}
+
+#ccaTable tbody tr.gold-row {
+  background: linear-gradient(90deg, #ffd70030, #fff7cc) !important;
+}
+#ccaTable tbody tr.silver-row {
+  background: linear-gradient(90deg, #c0c0c030, #f1f1f1) !important;
+}
+#ccaTable tbody tr.bronze-row {
+  background: linear-gradient(90deg, #cd7f3230, #f5e5d6) !important;
+}
+
+/* =======================================
+   ANALYTICS HEADER + FILTERS
+   (filters beside title, using old style)
+======================================= */
+.analytics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  gap: 20px;
+}
+
+.analytics-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 800;
+  color: #4a2fab;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.analytics-filters {
+  display: flex;
+  gap: 15px;
+}
+
+/* Old filter visual style, scoped to analytics header */
+.analytics-filters .filter-select {
+  width: 220px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 2px solid #d7c6ff;
+  background: #faf8ff;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #5a3ebc;
+  box-shadow: 0 4px 10px rgba(90, 62, 188, 0.15);
+  transition: all 0.2s ease-in-out;
+}
+
+.analytics-filters .filter-select:hover {
+  border-color: #b89aff;
+  background: #ffffff;
+}
+
+.analytics-filters .filter-select:focus {
+  border-color: #a27aff;
+  box-shadow: 0 0 0 4px rgba(162, 122, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+  .analytics-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .analytics-filters {
+    justify-content: center;
+  }
+}
+
+/* =======================================
+   KPI GRID
+======================================= */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin: 20px 0 40px;
+}
+
+.kpi-card {
+  background: linear-gradient(135deg, #ffffff, #f5f0ff);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e3ff;
+  text-align: center;
+  transition: 0.25s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+}
+
+.kpi-card h4 {
+  font-size: 16px;
+  color: #5b46c4;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.kpi-card p {
+  font-size: 24px;
+  font-weight: 700;
+  color: #372b72;
+}
+
+@media (max-width: 992px) {
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =======================================
+   MAIN ANALYTICS CARDS
+======================================= */
+.analytics-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0px 5px 22px rgba(0, 0, 0, 0.06);
+  transition: 0.25s ease;
+}
+
+.analytics-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 26px rgba(0, 0, 0, 0.12);
+}
+
+.chart-title {
+  text-align: center;
+  color: #4a2fab;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.analytics-card canvas {
+  width: 100% !important;
+  max-height: 360px;
+}
+
+/* =======================================
+   3-COLUMN ANALYTICS GRID
+======================================= */
+.analytics-grid-3 {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr;
+  gap: 28px;
+  margin-top: 30px;
+}
+
+@media (max-width: 1200px) {
+  .analytics-grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .breakdown-wrapper {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =======================================
+   BREAKDOWN LEGEND
+======================================= */
+.breakdown-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 5px;
+  background: #faf8ff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  margin-bottom: 6px;
+  transition: 0.15s ease;
+}
+
+.breakdown-row:hover {
+  background: #f2ecff;
+  transform: translateX(4px);
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.breakdown-name {
+  flex: 1;
+  font-weight: 500;
+  color: #444;
+  white-space: nowrap;
+}
+
+.breakdown-value {
+  font-weight: 600;
+  color: #5b46c4;
+}
+
+.breakdown-text {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+/* =======================================
+   MODAL STYLES (GLASSMORPHIC)
+======================================= */
+
+/* MODAL CONTAINER */
+.modal.fade .modal-dialog .modal-content {
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  box-shadow: 0 18px 40px rgba(30, 20, 60, 0.25) !important;
+  animation: fadeInUp 0.25s ease !important;
+}
+
+/* ANIMATION */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HEADER */
+.modal.fade .modal-dialog .modal-content .modal-header {
+  background: linear-gradient(135deg, #4e2a84, #7141e2, #6a74ff) !important;
+  padding: 18px 28px !important;
+  color: #fff !important;
+  border-bottom: none !important;
+  box-shadow: 0 2px 14px rgba(78, 42, 132, 0.3) !important;
+}
+
+.modal.fade .modal-dialog .modal-content .modal-title {
+  font-weight: 700 !important;
+  font-size: 1.35rem !important;
+  letter-spacing: 0.2px !important;
+}
+
+/* Close button */
+.modal.fade .modal-dialog .modal-content .btn-close-white {
+  filter: brightness(500%) !important;
+}
+
+/* BODY */
+.modal.fade .modal-dialog .modal-content .modal-body {
+  padding: 28px 36px !important;
+  background: #fafaff !important;
+}
+
+/* LABELS */
+.modal.fade .modal-dialog .modal-content .modal-body .form-label {
+  font-weight: 700 !important;
+  color: #4e2a84 !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 6px !important;
+}
+
+/* INPUT + SELECT + TEXTAREA */
+.modal.fade .modal-dialog .modal-content .modal-body .form-control,
+.modal.fade .modal-dialog .modal-content .modal-body .form-select {
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #d4d5ec !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 2px 8px rgba(120, 120, 160, 0.06) !important;
+  transition: 0.2s ease !important;
+}
+
+.modal.fade .modal-dialog .modal-content .modal-body .form-control:focus,
+.modal.fade .modal-dialog .modal-content .modal-body .form-select:focus {
+  border-color: #4e2a84 !important;
+  box-shadow: 0 0 0 3px rgba(78, 42, 132, 0.25) !important;
+  background: #fff !important;
+}
+
+/* TEXTAREA */
+.modal.fade .modal-dialog .modal-content .modal-body textarea.form-control {
+  min-height: 105px !important;
+}
+
+/* IMAGE PREVIEW */
+#ccaImagePreviewContainer {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 6px !important;
+}
+
+#ccaImagePreview {
+  border-radius: 14px !important;
+  max-height: 210px !important;
+  width: auto !important;
+  box-shadow: 0 8px 18px rgba(50, 40, 90, 0.25) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+#ccaImagePreview:hover {
+  transform: scale(1.025) !important;
+  box-shadow: 0 10px 22px rgba(50, 40, 90, 0.35) !important;
+}
+
+/* FOOTER */
+.modal.fade .modal-dialog .modal-content .modal-footer {
+  background: #fafaff !important;
+  border-top: none !important;
+  padding: 18px 32px !important;
+}
+
+/* CANCEL BUTTON */
+.modal.fade .modal-dialog .modal-content .modal-footer .btn-light {
+  border-radius: 10px !important;
+  border: 1px solid #ccccdd !important;
+  padding: 9px 22px !important;
+  font-weight: 600 !important;
+}
+
+.modal.fade .modal-dialog .modal-content .modal-footer .btn-light:hover {
+  background: #ececff !important;
+  border-color: #b8b8e8 !important;
+}
+
+/* SAVE BUTTON */
+.confirm-btn {
+  padding: 9px 26px !important;
+  border-radius: 12px !important;
+  border: none !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  background: linear-gradient(135deg, #4e2a84, #6a46d4, #8f5dff) !important;
+  box-shadow: 0 6px 16px rgba(78, 42, 132, 0.4) !important;
+  transition: 0.25s ease !important;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 22px rgba(78, 42, 132, 0.55) !important;
+}
+
+/* =======================================
+   SP BRAND BUTTON PACK
+======================================= */
+.sp-add-btn,
+.sp-edit-btn,
+.sp-disable-btn,
+.sp-enable-btn {
+  border-radius: 10px !important;
+  padding: 8px 18px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  color: white !important;
+  transition: 0.25s ease !important;
+  box-shadow: 0 3px 10px rgba(80, 40, 140, 0.15) !important;
+}
+
+/* Add CCA — Purple Gradient */
+.sp-add-btn {
+  background: linear-gradient(135deg, #4e2a84, #7141e2, #9a74ff) !important;
+}
+
+.sp-add-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(120, 60, 220, 0.35) !important;
+}
+
+/* Edit Button — Blue Gradient */
+.sp-edit-btn {
+  background: linear-gradient(135deg, #3a7bff, #5ca2ff) !important;
+}
+
+.sp-edit-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(80, 140, 255, 0.35) !important;
+}
+
+/* Disable Button — Red Gradient */
+.sp-disable-btn {
+  background: linear-gradient(135deg, #d64545, #ff6d6d) !important;
+}
+
+.sp-disable-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(255, 80, 100, 0.35) !important;
+}
+
+/* Enable Button — Green Gradient */
+.sp-enable-btn {
+  background: linear-gradient(135deg, #28a745, #5cd68b) !important;
+}
+
+.sp-enable-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(40, 167, 69, 0.35) !important;
+}
+
+/* =============================
+   EXPORT DROPDOWN — MATCH FILTER STYLE
+============================= */
+.export-dropdown-btn{
+  padding: 10px 14px;  /* MATCH FILTER PADDING */
+  border-radius: 12px; /* MATCH FILTER RADIUS */
+  border: 2px solid #d7c6ff; /* MATCH FILTER BORDER */
+  background: #faf8ff; /* MATCH FILTER BG */
+  font-size: 1rem; /* MATCH FILTER TEXT SIZE */
+  font-weight: 500; /* MATCH FILTER FONT WEIGHT */
+  color: #5a3ebc; /* MATCH FILTER PURPLE */
+  min-width: 160px;
+  box-shadow: 0 4px 10px rgba(90, 62, 188, 0.15); /* MATCH FILTER SHADOW */
+  transition: all 0.25s ease;
+}
+
+.export-dropdown-btn:hover {
+  border-color: #b89aff; /* SAME AS FILTER HOVER */
+  background: #ffffff;
+  cursor: pointer;
+}
+
+/* Dropdown menu styling */
+.simple-export-menu {
+  border-radius: 12px;
+  padding: 6px 0;
+  font-size: 15px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.simple-export-menu .dropdown-item {
+  padding: 10px 18px;
+  border-radius: 6px;
+  color: #4a2fab;
+  font-weight: 500;
+}
+
+.simple-export-menu .dropdown-item:hover {
+  background: #f3ecff;
+  color: #6f3cff;
+}

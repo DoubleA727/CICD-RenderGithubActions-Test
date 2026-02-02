@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <link rel="stylesheet" href="./assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link rel="stylesheet" href="./assets/css/reviews.css">
+    <script src="./assets/bootstrap/bootstrap.min.js" defer></script>
+</head>
+<body>
+    <script src="/assets/js/navbar.js"></script>
+
+    <div class="mainBg mx-5 rounded py-5 px-3">
+        <div class="row justify-content-around mb-5">
+            <div class="card text-dark col-7 p-3"> 
+                <div id="ReviewFor" class="mb-2"></div>
+                <select class="form-select selectpicker mb-2" id="merchDropdown" name="merch" data-live-search="true" data-size="8" title="Choose merchandise...">
+                    <!-- filled ltr  -->
+                </select>
+                <button type="submit" class="btn btn-primary col-3" id="viewReviews">View Reviews</button>
+            </div>
+            <div class="card col-4 p-3">
+                <h3 class="mb-2">Want to leave a review?</h3>
+                <p class="mb-4">Leave a review here or see your reviews</p>
+                <div class="d-flex mb-2 gap-3">
+                    <button type="submit" class="btn btn-success" id="makeReview">Make Review</button>
+                    <button type="submit" class="btn btn-primary" id="viewUserReviews">My Reviews</button>
+                </div>
+            </div>
+        </div>
+        <!-- reviews -->    
+        <div class="d-flex align-items-center mb-2" style="gap: 10px;">
+            <h2 class="text-light ms-2 mb-0">Reviews:</h2>
+
+            <button id="aiSummaryBtn" class="btn btn-dark btn-sm" style="height:36px;">
+                <img src="./assets/images/hf.png" style="height:18px; width:18px;">
+                <span>AI Summary</span>
+                <span class="tooltip-text">Summarise reviews with AI</span>
+            </button>
+        </div>
+
+        <div id="aiSummaryBox" class="card p-3 mx-4 my-4" style="display:none; background:#f6f6f6; border-left:5px solid #ffb700;">
+            <h4>AI Summary</h4>
+            <p id="aiSummaryText"></p>
+        </div>
+        <hr class="opaque mb-5">
+        <div id="reviewsRows"></div>
+    </div>
+
+    <script src="./assets/js/review.js"></script>
+    <script src="./assets/js/footer.js"></script>
+    <script src="./assets/js/getCurrentURL.js" defer></script>
+    <script src="./assets/js/queryCmds.js" defer></script>
+    <script src="./assets/js/userNavbarToggle.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js" defer></script>
+</body>
+</html>

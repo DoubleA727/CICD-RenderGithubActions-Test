@@ -1,0 +1,219 @@
+
+.full-width-img {
+    width: 50%;
+    height: auto;
+}
+.half-width-img {
+    width: 40%;
+    height: auto;
+}
+
+/* -------------- NAVBAR -------------- */
+    /* Hamburger icon */
+.navbar-toggler {
+    border: 0;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active
+ {
+    outline: none;
+    box-shadow: none;
+    border: 0;
+}
+
+.toggler-icon {
+    width: 28px;
+    height: 3px;
+    background-color: black;
+    display: block;
+    transition: all 0.5s;
+}
+
+.middle-bar {
+    margin: 5px auto;
+}
+
+.navbar-toggler .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+}
+
+.navbar-toggler .middle-bar {
+    opacity: 0;
+}
+
+.navbar-toggler .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 10%;
+}
+
+.navbar-toggler.collapsed .top-bar,
+.navbar-toggler.collapsed .bottom-bar {
+    transform: rotate(0);
+}
+.navbar-toggler.collapsed .middle-bar {
+    opacity: 1;
+}
+
+    /* In the FUTURE or FORM page */
+.future-page,
+.form-page {
+    text-decoration: underline;
+    text-underline-offset: 7px;
+    text-decoration-thickness: 3px;
+    text-decoration-color: #e54ed0;
+    transition: all 0.5s ease; 
+}
+
+.future-page::before,
+.future-page::after,
+.form-page::before,
+.form-page::after {
+    content: ' ‎ ';
+}
+
+.nav-button {
+    font-size: 1.5em;
+    font-family: "Orbitron-Black";
+    font-weight: 700;
+}
+
+.nav-button:hover,
+.nav-button:active {
+    color: #e54ed0;
+    transition: all 0.3s ease; 
+}
+
+.nav-title {
+    font-size: 60px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #ffc0cb, #800080, #000000);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+
+/* Card Image */
+.card-img-top {
+    height: 210px; 
+    object-fit: cover;
+}
+
+/* Hide the radio buttons */
+.rating-stars input {
+    display: none;
+  }
+  
+  /* Container to ensure left-to-right selection */
+  .rating-stars {
+    display: flex;
+    flex-direction: row-reverse; /* Ensures stars go left to right */
+  }
+  
+  /* Style the stars */
+  .rating-stars .star {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+    margin-right: 5px;
+  }
+  
+  /* Properly highlight stars on hover & selection */
+  .rating-stars input:checked + label,
+  .rating-stars input:checked + label ~ label {
+    color: #f5c518; /* Gold color */
+  }
+  
+  .rating-stars label:hover,
+  .rating-stars label:hover ~ label {
+    color: #f5c518;
+  }
+  
+
+.image-link {
+    display: inline-block;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.image-link.selected {
+    border: 2px solid #800080; /* Highlight selected image */
+}
+
+#modalImageGridContainer {
+    display: flex;
+    justify-content: center; /* Centers images horizontally */
+    flex-wrap: wrap; /* Ensures images wrap properly */
+    gap: 5px; /* Adds space between images */
+}
+
+.planet-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+}
+
+.planet-image.selected {
+    border: 3px solid blue; /* Highlight selected image */
+}
+
+/* Make recently viewed cards match merch.html */
+#recentlyViewedGrid .merch-card img {
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 0.85rem;
+    border-top-right-radius: 0.85rem;
+}
+
+#recentlyViewedGrid .card {
+    border: none;
+    border-radius: 0.85rem;
+    box-shadow: 0 0.15rem 0.45rem rgba(0, 0, 0, 0.06);
+}
+
+
+
+
+
+/* When hamburger menu is not displayed */
+@media (min-width: 768px) {
+    /* When the screen is larger than 576px */
+    .nav-button {
+      margin-right: 30px;
+    }
+}
+
+/* Highlight selected rows in admin merch table */
+tr.merch-row-selected {
+  background-color: rgba(13, 110, 253, 0.08); /* light primary */
+}
+
+/* Make rows look selectable */
+#merchTable tbody tr.merch-row {
+  cursor: pointer;
+}
+
+/* Archive icon drop zone styles */
+.archive-dropzone {
+  border-style: dashed;
+  border-width: 1px;
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* While dragging over the icon */
+.archive-dropzone.drag-over {
+  background-color: #dc3545;      /* Bootstrap danger */
+  color: #fff;
+  border-style: solid;
+}
