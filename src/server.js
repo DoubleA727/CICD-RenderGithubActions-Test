@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const http = require("http");
 const { Server } = require("socket.io");
 
@@ -18,7 +17,7 @@ const io = new Server(server, {
   },
 });
 
-// if you want to access io inside routes/controllers later:
+// make io accessible in routes/controllers
 app.set("io", io);
 
 // mount all socket modules
@@ -26,5 +25,4 @@ registerSockets(io);
 
 server.listen(port, () => {
   console.log(`App listening on port ${port}`);
-  console.log(`Link: http://localhost:${port}`);
 });

@@ -1,44 +1,44 @@
-const express = require('express');
+const express = require("express");
 const cookieParser = require("cookie-parser");
-const createError = require('http-errors');
-const path = require('path');
-
+const path = require("path");
 const passport = require("passport");
 const configurePassport = require("./services/passport/passport");
 
-
 const app = express();
+
+// Middlewares
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true, limit: "2mb" }));
-
 app.use(cookieParser());
 
+// Passport setup
 configurePassport(passport);
 app.use(passport.initialize());
 
-
-const mainRoute = require('./routers/mainRoute');
-
-app.use(express.static(__dirname + '/public'));
-
+// API routes
+const mainRoute = require("./routers/mainRoute");
 app.use("/api", mainRoute);
 
-// app.use((req, res, next) => {
-//   next(createError(404, `Unknown resource ${req.method} ${req.originalUrl}`));
-// });
+// Serve frontend build folder
+app.use(express.static(path.join(__dirname, "build")));
+
+// Catch-all route to serve SPA
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 
 // Ignore Chrome devtools probe
-app.get('/.well-known/*', (req, res) => res.status(204).end());
+app.get("/.well-known/*", (req, res) => res.status(204).end());
 
 // Ignore missing source maps quietly
 app.get(/^\/assets\/.*\.(map)$/, (req, res) => res.status(404).end());
 
-// eslint-disable-next-line no-unused-vars
-app.use((error, req, res, next) => {
-  console.error(error);
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err);
   res
-    .status(error.status || 500)
-    .json({ error: error.message || 'Unknown Server Error!' });
+    .status(err.status || 500)
+    .json({ error: err.message || "Unknown Server Error!" });
 });
 
 module.exports = app;
