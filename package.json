@@ -43,11 +43,11 @@
     "migration:test": "dotenv -e .env.test -- npx prisma migrate dev",
     "migration:reset": "dotenv -e .env.test -- npx prisma migrate reset",
     "production": "dotenv -e /etc/secrets/_env_production -- node ./src/server.js",
-    "start": "dotenv -e .env.test -- nodemon ./src/server.js",
+    "start": "node ./src/server.js",      
+    "dev": "nodemon index.js",           
     "test": "dotenv -e .env.test -- playwright test --config=configs/playwright.config.js",
     "lint": "eslint -c configs/eslint.config.mjs ./src/*",
     "test-trace": "npm test -- --reporter=html --trace on",
-    "dev": "nodemon index.js",
     "init": "dotenv -e .env.test -- node ./prisma/data/initUsers && dotenv -e .env.test -- node ./prisma/seed.js",
     "nuke": "dotenv -e .env.test -- node ./prisma/truncateAll.js",
 
