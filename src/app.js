@@ -19,12 +19,12 @@ app.use(passport.initialize());
 const mainRoute = require("./routers/mainRoute");
 app.use("/api", mainRoute);
 
-// Serve frontend build folder
-app.use(express.static(path.join(__dirname, "build")));
+// Serve frontend folder
+app.use(express.static(path.join(__dirname, "public")));
 
 // Catch-all route to serve SPA
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Ignore Chrome devtools probe
