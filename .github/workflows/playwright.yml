@@ -4,10 +4,15 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+
+env:
+    DATABASE_URL: ${{vars.DATABASE_URL}}
+    PORT: ${{vars.PORT}}
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    environment: test
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
