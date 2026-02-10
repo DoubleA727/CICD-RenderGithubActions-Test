@@ -1,6 +1,28 @@
 // playwright-tests/enableCCA.spec.js
 const { test, expect } = require("@playwright/test");
 
+async function closeBlockingModal(page) {
+  const modal = page.locator("#exampleModal");
+
+  if (await modal.isVisible().catch(() => false)) {
+    const closeBtn = modal
+      .getByRole("button", { name: /close/i })
+      .first();
+
+    if (await closeBtn.isVisible().catch(() => false)) {
+      await closeBtn.click({ force: true });
+    } else {
+      await page.keyboard.press("Escape").catch(() => {});
+    }
+  }
+
+  await modal.waitFor({ state: "hidden", timeout: 5000 }).catch(() => {});
+  await page
+    .locator(".modal-backdrop")
+    .waitFor({ state: "detached", timeout: 5000 })
+    .catch(() => {});
+}
+
 test.describe("CCA Admin Management", () => {
   test("Admin can enable a disabled CCA", async ({ page }) => {
     // 1) Go to site
@@ -17,8 +39,10 @@ test.describe("CCA Admin Management", () => {
     await page.waitForLoadState("networkidle");
 
     // 3) Click Admin in navbar
+    await closeBlockingModal(page);
     await page.getByRole("button", { name: /toggle navigation/i }).click();
     await page.getByRole("link", { name: /^admin$/i }).click();
+
 
     // 4) Click CCA Management in sidebar
     await page.getByRole("link", { name: /cca management/i }).click();
