@@ -13,8 +13,9 @@ env:
 
 jobs:
   test:
-    timeout-minutes: 60
+    name: Playwright E2E
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     environment: test
 
     steps:
