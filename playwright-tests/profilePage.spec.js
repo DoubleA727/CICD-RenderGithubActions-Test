@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('Can login and see profile page', async ({ page }) => {
-  await page.goto('http://localhost:3001');
+  await page.goto('/');
 
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'LOGIN' }).click();
@@ -12,7 +12,7 @@ test('Can login and see profile page', async ({ page }) => {
 
   await page.getByRole('button', { name: 'Login' }).click();
 
-  await expect(page).toHaveURL('http://localhost:3001/profile.html');
+  await expect(page).toHaveURL('/profile.html');
 
   const token = await page.evaluate(() => localStorage.getItem('token'));
   const role = await page.evaluate(() => localStorage.getItem('role'));

@@ -25,7 +25,7 @@ test.describe("Admin Export Feature", () => {
     page,
   }) => {
     // 1) Go to site
-    await page.goto("http://localhost:3001");
+    await page.goto("/");
 
     // 2) Login (admin1 / 123)
     await page.getByRole("button", { name: /toggle navigation/i }).click();

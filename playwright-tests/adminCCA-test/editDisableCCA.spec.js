@@ -4,7 +4,7 @@ const { test, expect } = require("@playwright/test");
 test.describe("CCA Admin Management", () => {
   test("Admin can login, go to CCA Management, edit and disable a CCA", async ({ page }) => {
     // 1) Go to site
-    await page.goto("http://localhost:3001");
+    await page.goto("/");
 
     // 2) Login (admin1 / 123)
     await page.getByRole("button", { name: /toggle navigation/i }).click();

@@ -3,14 +3,14 @@ import { test, expect } from "@playwright/test";
 test("delete order item from cart success, item is not visible in cart", async ({
   page,
 }) => {
-  await page.goto("http://localhost:3001/login.html");
+  await page.goto("/login.html");
   await page.getByRole("textbox", { name: "Username" }).click();
   await page.getByRole("textbox", { name: "Username" }).fill("admin1");
   await page.getByRole("textbox", { name: "Password" }).click();
   await page.getByRole("textbox", { name: "Password" }).fill("123");
   await page.getByRole("button", { name: "Login" }).click();
   // waits for token to load
-  await page.waitForURL("http://localhost:3001/profile.html");
+  await page.waitForURL("/profile.html");
   await page.getByRole("button", { name: "Toggle navigation" }).click();
   await page.getByRole("link", { name: "MERCH", exact: true }).click();
   await page.getByRole("button", { name: "Buy" }).first().click();

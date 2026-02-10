@@ -2,7 +2,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('Can see AI Analysis of the Reviews', async ({ page }) => {
-  await page.goto('http://localhost:3001');
+  await page.goto('/');
 
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'REVIEW' }).click();

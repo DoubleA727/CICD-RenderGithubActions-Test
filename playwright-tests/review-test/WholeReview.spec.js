@@ -4,7 +4,7 @@ const { test, expect } = require('@playwright/test');
 //need to have no review made, and have all 3 accounts registered already with db fes 2021 shirt bouth with no review
 
 test('Can login, make review, edit review, then delete it', async ({ page, browserName }) => {
-  await page.goto('http://localhost:3001');
+  await page.goto('/');
 
   // --- LOGIN ---
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
@@ -27,7 +27,7 @@ test('Can login, make review, edit review, then delete it', async ({ page, brows
   // --- MAKE REVIEW ---
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'REVIEW' }).click();
-  await page.goto('http://localhost:3001/review.html?merchId=7');
+  await page.goto('/review.html?merchId=7');
   await page.getByRole('button', { name: 'Make Review' }).click();
 
   const starRadio = page.getByRole('radio', { name: '⭐⭐ 2' });

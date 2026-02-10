@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 
 // admin edit user
 test('admin successfully edit user\'s details', async ({ page }) => {
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -23,7 +23,7 @@ test('admin successfully edit user\'s details', async ({ page }) => {
 
 // admin delete user
 test('admin successfully delete user', async ({ page }) => {
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -44,7 +44,7 @@ test('admin successfully delete user', async ({ page }) => {
 
 // admin search user
 test('admin successfully searches for specific user', async ({ page }) => {
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();

@@ -3,7 +3,7 @@ const { test, expect } = require("@playwright/test");
 test.describe("Homepage – Limited Time Deals", () => {
   test("Limited Time Deals cards render correctly", async ({ page }) => {
     // 1) Go to homepage (no login needed)
-    await page.goto("http://localhost:3001/index.html");
+    await page.goto("/index.html");
 
     // 2) Limited deals container exists
     const container = page.locator("#limitedCards");

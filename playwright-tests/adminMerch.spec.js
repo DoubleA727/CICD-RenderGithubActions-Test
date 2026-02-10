@@ -9,7 +9,7 @@ test('admin create merch successful', async ({ page }) => {
     __dirname,
     '../src/public/assets/images/hf.png'
     );
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -44,7 +44,7 @@ test('admin create merch successful', async ({ page }) => {
 test('admin edit merch details successful', async ({page}) => {
     test.setTimeout(120000);
 
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -69,7 +69,7 @@ test('admin edit merch details successful', async ({page}) => {
 test('admin archive merch successful', async ({page}) => {
     test.setTimeout(120000);
 
-    await page.goto('http://localhost:3001/login.html');
+    await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();
@@ -99,7 +99,7 @@ test('admin archive merch successful', async ({page}) => {
 test('admin unarchive merch successful', async ({page}) => {
     test.setTimeout(120000);
     
-     await page.goto('http://localhost:3001/login.html');
+     await page.goto('/login.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'Password' }).click();

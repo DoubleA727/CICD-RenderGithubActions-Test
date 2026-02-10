@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 const path = require('path');
 
 test('Can login and upload profile picture', async ({ page }) => {
-  await page.goto('http://localhost:3001');
+  await page.goto('/');
 
   // Open navigation and go to LOGIN
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
@@ -16,7 +16,7 @@ test('Can login and upload profile picture', async ({ page }) => {
   await page.getByRole('button', { name: 'Login' }).click();
 
   // Confirm navigation to profile page
-  await expect(page).toHaveURL('http://localhost:3001/profile.html');
+  await expect(page).toHaveURL('/profile.html');
 
   // Optional: click the "Choose File" button for realism
   const chooseFileBtn = page.getByRole('button', { name: 'Choose File' });

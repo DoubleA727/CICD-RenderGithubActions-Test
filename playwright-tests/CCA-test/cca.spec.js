@@ -62,7 +62,7 @@ test.describe("CCA Page", () => {
     });
 
     // Go to your page
-    await page.goto("http://localhost:3001/cca.html");
+    await page.goto("/cca.html");
 
     // Wait for cards to render
     await expect(page.locator(".cca-card")).toHaveCount(3);
@@ -128,7 +128,7 @@ test.describe("CCA Page", () => {
       });
     });
 
-    await page.goto("http://localhost:3001/cca.html");
+    await page.goto("/cca.html");
     await expect(page.locator(".cca-card")).toHaveCount(3);
 
     await page.fill("#searchInput", "dance");
@@ -166,7 +166,7 @@ test.describe("CCA Page", () => {
       });
     });
 
-    await page.goto("http://localhost:3001/cca.html");
+    await page.goto("/cca.html");
     await expect(page.locator(".cca-card")).toHaveCount(2);
 
     await page.selectOption("#categoryFilter", "Sports");

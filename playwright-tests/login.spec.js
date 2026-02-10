@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('login success redirects to profile and stores token', async ({ page }) => {
-  await page.goto('http://localhost:3001/login.html');
+  await page.goto('/login.html');
   await page.getByRole('textbox', { name: 'Username' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
   await page.getByRole('textbox', { name: 'Password' }).click();
@@ -19,7 +19,7 @@ test('login success redirects to profile and stores token', async ({ page }) => 
 });
 
 test('login failure shows warning card', async ({ page }) => {
-  await page.goto('http://localhost:3001/login.html');
+  await page.goto('/login.html');
   await page.getByRole('textbox', { name: 'Username' }).click();
   await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
   await page.getByRole('textbox', { name: 'Password' }).click();

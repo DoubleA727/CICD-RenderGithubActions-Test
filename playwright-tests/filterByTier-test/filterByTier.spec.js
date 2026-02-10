@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
-  await page.goto('http://localhost:3001/index.html');
+  await page.goto('/index.html');
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'LOGIN' }).click();
   await page.getByRole('textbox', { name: 'Username' }).click();
@@ -11,7 +11,7 @@ test('test', async ({ page }) => {
   await page.getByRole('button', { name: 'Login' }).click();
 
   // waits for token to load
-  await page.waitForURL('http://localhost:3001/profile.html');
+  await page.waitForURL('/profile.html');
 
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await page.getByRole('link', { name: 'MERCH', exact: true }).click();

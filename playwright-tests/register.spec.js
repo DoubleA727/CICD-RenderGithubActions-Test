@@ -1,7 +1,9 @@
 const { test, expect } = require('@playwright/test');
 
+const baseURL = process.env.BASE_URL || `http://localhost:${process.env.PORT || 3001}`;
+
 test.beforeEach(async ({ request }) => {
-  const res = await request.post('http://localhost:3001/api/users/test/delete-user', {
+  const res = await request.post(`${baseURL}/api/users/test/delete-user`, {
     data: { email: 'tester1@gmail.com' },
   });
 
@@ -14,7 +16,7 @@ test.beforeEach(async ({ request }) => {
 
 
 test('register success redirects to profile and stores token', async ({ page }) => {
-    await page.goto('http://localhost:3001/register.html');
+    await page.goto('/register.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('tester1');
     await page.getByRole('textbox', { name: 'First Name' }).click();
@@ -31,7 +33,7 @@ test('register success redirects to profile and stores token', async ({ page }) 
 });
 
 test('register failure shows warning card', async ({ page }) => {
-    await page.goto('http://localhost:3001/register.html');
+    await page.goto('/register.html');
     await page.getByRole('textbox', { name: 'Username' }).click();
     await page.getByRole('textbox', { name: 'Username' }).fill('admin1');
     await page.getByRole('textbox', { name: 'First Name' }).click();
